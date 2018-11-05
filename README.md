@@ -3,7 +3,7 @@
 
 This script is example of Nexus 7 2013 as second monitor.You may need to change 1920 and 1200 to the resolution of your tablet screen. You may also need to change LVDS1 if the default monitor's name is different.
 
-<code>gtf 1920 1200 60 | grep -oP "\".+"</code>
+<code>gtf 1920 1200 60 | grep -oP "\\".+"</code>
 
 The output will be something similar to <code>1920x1200_60.00"  108.88  1920 1360 1496 1712  1200 1025 1028 1060  -HSync +Vsync</code>. Copy everything into the next command.
 
