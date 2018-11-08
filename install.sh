@@ -42,7 +42,7 @@ cModename=$(gtf $sWidth $sHeight 60 | grep -oP "\".+" | grep -oP '"\K[^"\047]+(?
 echo "Modename = $cModename"
 echo ""
 
-# make a copy of templete
+# make a copy of templete 
 if [ -f ./vmonitor ]; then
     rm ./vmonitor
 fi

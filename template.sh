@@ -18,7 +18,7 @@ if [ $# -gt 1 ]; then
 fi
 
 if [ "$1" = "setup" ]; then
-    echo "setup"
+    echo "Done!"
     xrandr --newmode {modeline}
     xrandr --addmode VIRTUAL1 {modename}
     exit 0
