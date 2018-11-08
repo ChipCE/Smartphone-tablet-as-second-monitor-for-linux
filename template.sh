@@ -25,13 +25,13 @@ if [ "$1" = "setup" ]; then
 fi
 
 if [ "$1" = "enable" ]; then
-    echo "enable"
+    echo "VIRTUAL1 is enabled"
     xrandr --output VIRTUAL1 --mode {modename} --primary --right-of {display}
     exit 1
 fi
 
 if [ "$1" = "disable" ]; then
-    echo "disable"
+    echo "VIRTUAL1 is disabled"
     xrandr --output VIRTUAL1 --off
     exit 1
 fi
