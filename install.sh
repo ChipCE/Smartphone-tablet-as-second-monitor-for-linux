@@ -13,27 +13,34 @@ fi
 
 
 # userinput
-read -p "Enter screen width in pixels : " sWidth
-read -p "Enter screen height in pixels : " sHeight
-read -p "Screen size is $sWidth x $sHeight, is that okay ? y/n : " uConfirm
-if [ "$uConfirm" != "y" ]; then
-    echo "Exit setup!"
-    exit 1
-fi
+sWidth=0
+sHeight=0
+uConfirm="n"
+while [  "$uConfirm" != "y" ]; do
+    read -p "Enter screen width in pixels : " sWidth
+    read -p "Enter screen height in pixels : " sHeight
+    read -p "Screen size is $sWidth x $sHeight, is that okay ? y/n : " uConfirm
+    echo ""
+done
 
-read -p "Enter default display name : " sDisplay
-read -p "Default display name is $sDisplay, is that okay ? y/n : " uConfirm
-if [ "$uConfirm" != "y" ]; then
-    echo "Exit setup!"
-    exit 1
-fi
+
+# list connected displays
+echo "Listing connected displays..."
+xrandr | grep -Po ".+\sconnected" | grep -Po ".+\s"
+uConfirm="n"
+while [  "$uConfirm" != "y" ]; do
+    read -p "Enter default connected display name : " sDisplay
+    read -p "Default connected display name is $sDisplay, is that okay ? y/n : " uConfirm
+    echo ""
+done
 
 # calc modeline
-echo "calculate VESA GTF mode lines for $sWidth x $sHeight with gtf"
+echo "Calculate VESA GTF mode lines for $sWidth x $sHeight with gtf"
 cModeline=$(gtf $sWidth $sHeight 60 | grep -oP "\".+")
 echo "Modeline = $cModeline"
 cModename=$(gtf $sWidth $sHeight 60 | grep -oP "\".+" | grep -oP '"\K[^"\047]+(?=["\047])')
 echo "Modename = $cModename"
+echo ""
 
 # make a copy of templete
 if [ -f ./vmonitor ]; then
@@ -43,21 +50,26 @@ cp template.sh vmonitor
 
 # replace text
 # sed -i 's/original/new/g' file.txt
+echo -e "Writing vmonitor script file ...\n"
 sed -i "s/{modeline}/$cModeline/g" vmonitor
 sed -i "s/{modename}/$cModename/g" vmonitor
 sed -i "s/{display}/$sDisplay/g" vmonitor
 
 # chmod it 775?
-echo "change vmonitor mode bits : 755"
+# echo "change vmonitor mode bits : 755"
 chmod 755 vmonitor
 
-# copy to bin
+# copy to bin confirm
 read -p "Install vmonitor to /bin, is that okay ? y/n : " uConfirm
+echo ""
 if [ "$uConfirm" != "y" ]; then
-    echo "Exit setup!"
-    exit 1
+    echo -e "Install to /bin ignored!\n"
+    exit 0
 fi
 
-cp vmonitor /bin/vmonitor
+# copy to bin
+yes | cp -rf vmonitor /bin/vmonitor
+
+echo -e "Installed into /bin/vmonitor.\n"
 echo "Done!"
 exit 0
