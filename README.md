@@ -1,5 +1,9 @@
 # Android as second monitor for linux
-### Using android as second monitor for linux with teamviewer 
+## Using android as second monitor for linux with teamviewer 
+
+## Setup
+
+### The hard way (not that hard :3)
 
 This script is example of Nexus 7 2013 as second monitor.You may need to change 1920 and 1200 to the resolution of your tablet screen. You may also need to change LVDS1 if the default monitor's name is different.
 
@@ -12,6 +16,16 @@ The output will be something similar to <code>"1920x1200_60.00"  108.88  1920 13
 <code>xrandr --addmode VIRTUAL1 1920x1200_60.00</code>
 
 <code>xrandr --output VIRTUAL1 --mode 1920x1200_60.00 --primary --right-of LVDS1</code>
+
+### The easier way
+- Clone this git   
+<code>git clone https://github.com/ChipTechno/Android-as-second-monitor-for-linux</code>
+- Run install script as root.   
+<code>sudo ./install.sh</code> 
+- run <code>vmonitor setup</code> to setup virtual monitor profile.   
+This command need to be executed each time X server start.
+- run <code>vmonitor enable</code> to enable virtual monitor.
+- Connect to host system using Teamviewr.
 
 ## Configuration
 - To show cursor in tablet screen, enable "show remote cursor" in teamviewer(tablet).   
