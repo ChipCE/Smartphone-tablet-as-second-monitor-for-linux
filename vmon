@@ -1,0 +1,116 @@
+#!/bin/bash
+vmonitor-help () {
+    echo "Virtual monitor - easy virtual monitor setup tool"
+    echo "USAGE : vmon [setup] [enable] [disable]"
+    echo -e "\t setup\t: Setup profile for virtual monitor.Need to execute each time X server start."
+    echo -e "\t enable\t: Enable virtual monitor."
+    echo -e "\t disable: Disable virtual monitor."
+}
+
+
+# read resolution config file
+user=($(who))
+resolutionFile="/home/${user[0]}/.vmon/resolution.conf"
+if [ ! -f "$resolutionFile" ]; then
+    echo "Error : Cannot read config file!"
+    echo "$resolutionFile not found."
+    exit 1
+fi
+resolution=($(grep "x" $resolutionFile))
+width=($(grep -oP "\d+x" $resolutionFile | grep -oP "\d+"))
+height=($(grep -oP "x\d+" $resolutionFile | grep -oP "\d+"))
+resCount=$(grep -c "x" $resolutionFile)
+resCount=`expr $resCount - 1` 
+
+# read user config file
+userConfFile="/home/${user[0]}/.vmon/vmon.conf"
+if [ ! -f "$userConfFile" ]; then
+    echo "Error : Cannot read config file!"
+    echo "$userConfFile not found."
+    exit 1
+fi
+defaultDisplay=$(grep "defaultDisplay" $userConfFile | grep -oP "\".+\"" | tr --delete \")
+defaultResolution=$(grep "defaultResolution" $userConfFile | grep -oP "\".+\"" | tr --delete \")
+
+# calc modeline with gtf
+modeline[0]=""
+modename[0]=""
+for i in $(seq 0 $resCount)
+do
+    modeline[$i]=$(gtf ${width[$i]} ${height[$i]} 60 | grep -oP "\".+"  | tr --delete \")
+    modename[$i]=$(gtf ${width[$i]} ${height[$i]} 60 | grep -oP "\".+" | grep -oP '"\K[^"\047]+(?=["\047])')
+done
+
+# check for valid config 
+invalidDisplay="true"
+displayName=($(xrandr | grep -oP ".+\sconnected" | sed 's/ connected.*//'))
+for i in "${displayName[@]}"
+do
+    if [ "$i" == "$defaultDisplay" ]; then
+        invalidDisplay="false"
+        break
+    fi
+done
+if [ "$invalidDisplay" == "true" ]; then
+    defaultDisplay=$(xrandr | grep -oP ".+\sconnected" | head -1 | sed 's/ connected.*//')
+    echo "Warning : invalid defaultDisplay , use $defaultDisplay as default display."
+fi
+
+
+invalidResolution="true"
+for i in "${modename[@]}"
+do
+    if [ "$i" == "$defaultResolution" ]; then
+        invalidResolution="false"
+        break
+    fi
+done
+if [ "$invalidResolution" == "true" ]; then
+    echo "Warning : invalid defaultResolution , use ${modename[0]} as default resolution."
+    defaultResolution=${modename[0]}
+fi
+
+
+# arg 
+if [ -z "$1" ]; then
+    vmonitor-help
+    echo "Error : Too few arguments!"
+    exit 0
+fi
+if [ $# -gt 1 ]; then
+    echo "Error : Too much arguments!"
+    exit 1
+fi
+
+if [ "$1" = "setup" ]; then
+    # loop
+    for i in $(seq 0 $resCount)
+    do
+        echo "Adding proflie for ${width[$i]} x ${height[$i]}"
+        #echo "modeline = $modeline"
+        #echo "modename = $modename"
+        xrandr --newmode ${modeline[$i]}
+        xrandr --addmode VIRTUAL1 ${modename[$i]}
+    done
+    exit 0
+fi
+
+if [ "$1" = "enable" ]; then
+    echo "Enable VIRTUAL1 with mode $defaultResolution --primary --right-of $defaultDisplay "
+    xrandr --output VIRTUAL1 --mode $defaultResolution --primary --right-of $defaultDisplay
+    exit 1
+fi
+
+if [ "$1" = "disable" ]; then
+    echo "VIRTUAL1 is disabled"
+    xrandr --output VIRTUAL1 --off
+    exit 1
+fi
+
+echo -e "Error : Unknown argument \"$1\" !"
+exit 1
+
+# --------------------------------
+
+
+

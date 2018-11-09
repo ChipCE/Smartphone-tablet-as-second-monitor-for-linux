@@ -20,14 +20,22 @@ The output will be something similar to <code>"1920x1200_60.00"  108.88  1920 13
 ### The easier way
 - Clone this git   
 <code>git clone https://github.com/ChipTechno/Android-as-second-monitor-for-linux</code>
+- Change directory   
+<code>cd Android-as-second-monitor-for-linux</code>
 - Run install script as root.   
 <code>sudo ./install.sh</code> 
-- run <code>vmonitor setup</code> to setup virtual monitor profile.   
+- run <code>vmon setup</code> to setup virtual monitor profile.   
 This command need to be executed each time X server start.
-- run <code>vmonitor enable</code> to enable virtual monitor.
+- run <code>vmon enable</code> to enable virtual monitor.
 - Connect to host system using Teamviewr.
+- To disable vmon, run <code>vmon disable</code>
 
 ## Configuration
+### vmon configuration
+- vmon config file are saved in /home/$USER/.vmon
+- You can add more custom resolution into resoluton.conf file.
+- Default resolution and default display(the main output display) can be set in vmon.conf.For more information about ouput displays and supported resolution profiles, run <code>xrandr</code> in terminal. 
+### Other configuration
 - To show cursor in tablet screen, enable "show remote cursor" in teamviewer(tablet).   
 - To connect with wlan, enable "incomming lan connection" in Extras > Options(linux).   
 - To connect via USB cable, you need adb installed and forward Teamviewer port with <code>adb forward</code> or enable USB Tethering in android setting.   
