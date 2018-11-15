@@ -29,8 +29,8 @@ if [ ! -f "$userConfFile" ]; then
     echo "$userConfFile not found."
     exit 1
 fi
-defaultDisplay=$(grep "defaultDisplay" $userConfFile | grep -oP "\".+\"" | tr --delete \")
-defaultResolution=$(grep "defaultResolution" $userConfFile | grep -oP "\".+\"" | tr --delete \")
+defaultDisplay=$(grep -P "^defaultDisplay" $userConfFile | grep -oP "\".+\"" | tr --delete \")
+defaultResolution=$(grep -P "^defaultResolution" $userConfFile | grep -oP "\".+\"" | tr --delete \")
 
 # calc modeline with gtf
 modeline[0]=""
