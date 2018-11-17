@@ -1,5 +1,11 @@
 #!/bin/bash
-vmonitor-help () {
+
+user=($(who))
+configDir="/home/${user[0]}/.vmon"
+resolutionFile="/home/${user[0]}/.vmon/resolution.conf"
+userConfFile="/home/${user[0]}/.vmon/vmon.conf"
+
+function vmonitor-help () {
     echo "Virtual monitor - easy virtual monitor setup tool"
     echo "USAGE : vmon [setup] [enable] [disable]"
     echo -e "\t setup\t: Setup profile for virtual monitor.Need to execute each time X server start."
@@ -7,14 +13,58 @@ vmonitor-help () {
     echo -e "\t disable: Disable virtual monitor."
 }
 
+function writeConfig () {
+    if [ ! -d "$configDir" ]; then
+        mkdir $configDir
+    fi
+
+    if [ -f $userConfFile ]; then
+        rm $userConfFile
+    fi
+
+    touch $userConfFile
+    echo "defaultDisplay=\"\"" >> $userConfFile
+    echo "defaultResolution=\"\"" >> $userConfFile
+    chmod 775 $userConfFile
+}
+
+function writeProfile () {
+    if [ ! -d "$configDir" ]; then
+        mkdir $configDir
+    fi
+
+    if [ -f $resolutionFile ]; then
+        rm $resolutionFile
+    fi
+
+    touch $resolutionFile
+    echo "600x960" >> $resolutionFile
+    echo "720x1080" >> $resolutionFile
+    echo "768x1024" >> $resolutionFile
+    echo "768x1366" >> $resolutionFile
+    echo "800x1080" >> $resolutionFile
+    echo "850x1280" >> $resolutionFile
+    echo "960x600" >> $resolutionFile
+    echo "1024x768" >> $resolutionFile
+    echo "1024x1366" >> $resolutionFile
+    echo "1080x1920" >> $resolutionFile
+    echo "1200x1920" >> $resolutionFile
+    echo "1280x720" >> $resolutionFile
+    echo "1280x800" >> $resolutionFile
+    echo "1280x850" >> $resolutionFile
+    echo "1366x768" >> $resolutionFile
+    echo "1366x1024" >> $resolutionFile
+    echo "1920x1080" >> $resolutionFile
+    echo "1920x1200" >> $resolutionFile
+    chmod 775 $resolutionFile
+}
+
 
 # read resolution config file
-user=($(who))
-resolutionFile="/home/${user[0]}/.vmon/resolution.conf"
 if [ ! -f "$resolutionFile" ]; then
-    echo "Error : Cannot read config file!"
-    echo "$resolutionFile not found."
-    exit 1
+    echo "Warning : Cannot read config file!"
+    echo "A template will be written to $resolutionFile ."
+    writeProfile
 fi
 resolution=($(grep "x" $resolutionFile))
 width=($(grep -oP "\d+x" $resolutionFile | grep -oP "\d+"))
@@ -23,14 +73,13 @@ resCount=$(grep -c "x" $resolutionFile)
 resCount=`expr $resCount - 1` 
 
 # read user config file
-userConfFile="/home/${user[0]}/.vmon/vmon.conf"
 if [ ! -f "$userConfFile" ]; then
-    echo "Error : Cannot read config file!"
-    echo "$userConfFile not found."
-    exit 1
+    echo "Warning : Cannot read config file!"
+    echo "A template will be written to $userConfFile ."
+    writeConfig
 fi
-defaultDisplay=$(grep "defaultDisplay" $userConfFile | grep -oP "\".+\"" | tr --delete \")
-defaultResolution=$(grep "defaultResolution" $userConfFile | grep -oP "\".+\"" | tr --delete \")
+defaultDisplay=$(grep "^defaultDisplay" $userConfFile | grep -oP "\".+\"" | tr --delete \")
+defaultResolution=$(grep "^defaultResolution" $userConfFile | grep -oP "\".+\"" | tr --delete \")
 
 # calc modeline with gtf
 modeline[0]=""
@@ -92,19 +141,20 @@ if [ "$1" = "setup" ]; then
         xrandr --newmode ${modeline[$i]}
         xrandr --addmode VIRTUAL1 ${modename[$i]}
     done
+    xrandr --output VIRTUAL1 --off
     exit 0
 fi
 
 if [ "$1" = "enable" ]; then
     echo "Enable VIRTUAL1 with mode $defaultResolution --primary --right-of $defaultDisplay "
     xrandr --output VIRTUAL1 --mode $defaultResolution --primary --right-of $defaultDisplay
-    exit 1
+    exit 0
 fi
 
 if [ "$1" = "disable" ]; then
     echo "VIRTUAL1 is disabled"
     xrandr --output VIRTUAL1 --off
-    exit 1
+    exit 0
 fi
 
 echo -e "Error : Unknown argument \"$1\" !"
