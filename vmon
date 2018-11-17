@@ -78,8 +78,10 @@ if [ ! -f "$userConfFile" ]; then
     echo "A template will be written to $userConfFile ."
     writeConfig
 fi
+
 defaultDisplay=$(grep "^defaultDisplay" $userConfFile | grep -oP "\".+\"" | tr --delete \")
 defaultResolution=$(grep "^defaultResolution" $userConfFile | grep -oP "\".+\"" | tr --delete \")
+
 
 # calc modeline with gtf
 modeline[0]=""
