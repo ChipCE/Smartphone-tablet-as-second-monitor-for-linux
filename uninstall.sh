@@ -25,5 +25,8 @@ echo "Remove /bin/vmon."
 rm /bin/vmon
 echo "Remove ${user[0]}/.vmon and it's contents."
 rm -rf /home/${user[0]}/.vmon
+echo "Remove /usr/share/man/man1/vmon.1.gz"
+rm -f /usr/share/man/man1/vmon.1.gz
 echo "Done"
 exit 0
+

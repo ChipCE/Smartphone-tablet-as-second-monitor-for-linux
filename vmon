@@ -7,7 +7,8 @@ userConfFile="/home/${user[0]}/.vmon/vmon.conf"
 
 function vmonitor-help () {
     echo "Virtual monitor - easy virtual monitor setup tool"
-    echo "USAGE : vmon [setup] [enable] [disable]"
+    echo "USAGE : vmon [setup] [enable] [disable] [help]"
+    echo -e "\t help\t: Display help."
     echo -e "\t setup\t: Setup profile for virtual monitor.Need to execute each time X server start."
     echo -e "\t enable\t: Enable virtual monitor."
     echo -e "\t disable: Disable virtual monitor."
@@ -156,6 +157,11 @@ fi
 if [ "$1" = "disable" ]; then
     echo "VIRTUAL1 is disabled"
     xrandr --output VIRTUAL1 --off
+    exit 0
+fi
+
+if [ "$1" = "help" ]; then
+    vmonitor-help
     exit 0
 fi
 

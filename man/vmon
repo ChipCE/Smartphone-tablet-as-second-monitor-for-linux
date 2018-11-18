@@ -1,0 +1,37 @@
+.\" Manpage for vmon.
+.\" Contact login721@gmail.com to correct errors or typos.
+.TH man 1 "2018-11-18" "1.3" "vmon man page"
+.SH NAME
+vmon \- Virtual monitor setup tool.
+.SH SYNOPSIS
+vmon [help]
+.br
+     [setup]
+.br
+     [enable]
+.br
+     [disable]
+.br
+.SH DESCRIPTION
+vmon is virtual monitor setup tool for Linux.
+.SH OPTIONS
+.TP
+\fBhelp\fP
+.br
+Print a short help text and exit.
+.TP
+\fBsetup\fP
+.br
+Setup profile for virtual monitor.Need to execute each time X server start.
+.TP
+\fBenable\fP
+.br
+Enable virtual monitor.
+.TP
+\fBdisable\fP
+.br
+Disable virtual monitor.
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+ChipCE (login721@gmail.com) https://github.com/ChipTechno

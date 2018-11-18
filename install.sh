@@ -135,5 +135,11 @@ chown -R ${user[0]}:${user[0]} /home/${user[0]}/.vmon
 #chown  $user:$user $userConfFile
 #chown  $user:$user $resolutionFile
 
+# man
+echo "Copy vmon to /usr/share/man/man1/vmon.1"
+yes | cp -rf man/vmon /usr/share/man/man1/vmon.1
+gzip /usr/share/man/man1/vmon.1
+chmod 775 /usr/share/man/man1/vmon.1.gz
+
 echo "Done!"
 exit 0
