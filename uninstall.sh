@@ -22,7 +22,7 @@ if [ "$uConfirm" != "y" ]; then
 fi
 
 echo "Remove /bin/vmon."
-rm /bin/vmon
+rm -f /bin/vmon
 echo "Remove ${user[0]}/.vmon and it's contents."
 rm -rf /home/${user[0]}/.vmon
 echo "Remove /usr/share/man/man1/vmon.1.gz"
