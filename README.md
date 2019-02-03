@@ -42,6 +42,7 @@ This command need to be executed each time X server start.
 - To turn-off VIRTUAL1 output, run <code>xrandr --output VIRTUAL1 --off</code> 
 
 ## Troubleshooting  
+### VIRTUAL1 not found error
 If you get the output VIRTUAL1 not found error, create 20-intel.conf file:   
 <code>sudo nano /usr/share/X11/xorg.conf.d/20-intel.conf</code>
 Add the following configuration information into the file:
@@ -53,3 +54,6 @@ Section "Device"
 EndSection
 </pre>
 and reboot.
+
+### Not ready. Please check your connection error
+install <code>libicu</code> and restart teamviewer.
