@@ -56,4 +56,7 @@ EndSection
 and reboot.
 
 ### 2.Not ready. Please check your connection error
+<code>
+    systemctl start teamviewerd
+</code>
 install <code>libicu</code> and restart teamviewer.
