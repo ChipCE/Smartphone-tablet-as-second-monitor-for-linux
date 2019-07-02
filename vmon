@@ -149,8 +149,10 @@ if [ "$1" = "setup" ]; then
 fi
 
 if [ "$1" = "enable" ]; then
-    echo "Enable VIRTUAL1 with mode $defaultResolution --primary --right-of $defaultDisplay "
-    xrandr --output VIRTUAL1 --mode $defaultResolution --primary --right-of $defaultDisplay
+    #echo "Enable VIRTUAL1 with mode $defaultResolution --primary --right-of $defaultDisplay "
+    #xrandr --output VIRTUAL1 --mode $defaultResolution --primary --right-of $defaultDisplay
+    echo "Enable VIRTUAL1 with mode $defaultResolution --right-of $defaultDisplay "
+    xrandr --output VIRTUAL1 --mode $defaultResolution --right-of $defaultDisplay
     exit 0
 fi
 
