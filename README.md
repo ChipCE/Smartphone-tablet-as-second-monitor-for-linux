@@ -1,5 +1,4 @@
 # Android as second monitor for linux
-## Using android as second monitor for linux with teamviewer 
 
 ## Setup
 
@@ -22,12 +21,12 @@ The output will be something similar to <code>"1920x1200_60.00"  108.88  1920 13
 <code>git clone https://github.com/ChipTechno/Android-as-second-monitor-for-linux</code>
 - Change directory   
 <code>cd Android-as-second-monitor-for-linux</code>
-- Run install script as root.   
+- Run install script as root and follow the instruction.   
 <code>sudo ./install.sh</code> 
 - run <code>vmon setup</code> to setup virtual monitor profile.   
 This command need to be executed each time X server start.
-- run <code>vmon enable</code> to enable virtual monitor.
-- Connect to host system using Teamviewr.
+- run <code>vmon enable</code> to enable virtual monitor. If success, you will able to se an additional monitor in "display" setting.
+- Connect to host system using Teamviewr, VNC or any screen sharing program.
 - To disable vmon, run <code>vmon disable</code>
 
 ## Configuration
@@ -56,7 +55,6 @@ EndSection
 and reboot.
 
 ### 2.Not ready. Please check your connection error
-<code>
-    systemctl start teamviewerd
-</code>
-install <code>libicu</code> and restart teamviewer.
+- Check if teamviewerd has been started, if not start it   
+<code>systemctl start teamviewerd</code>   
+- install <code>libicu</code> and restart teamviewer.
