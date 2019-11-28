@@ -1,4 +1,5 @@
 # Android as second monitor for linux
+Simple cli tool to create virtual monitor for Linux. You can use any remote desktop software(vnc,teamviewer ..) to connect to that monitor. 
 
 ## Setup
 
