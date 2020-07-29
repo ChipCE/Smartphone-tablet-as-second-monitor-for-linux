@@ -21,7 +21,7 @@ The output will be something similar to <code>"1920x1200_60.00"  108.88  1920 13
 - Clone this git   
 <code>git clone https://github.com/ChipCE/Smartphone-tablet-as-second-monitor-for-linux</code>
 - Change directory   
-<code>cd Android-as-second-monitor-for-linux</code>
+<code>cd Smartphone-tablet-as-second-monitor-for-linux</code>
 - Run install script as root and follow the instruction.   
 <code>sudo ./install.sh</code> 
 - run <code>vmon setup</code> to setup virtual monitor profile.   
