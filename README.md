@@ -35,7 +35,7 @@ This command need to be executed each time X server start.
 - vmon config file are saved in /home/$USER/.vmon
 - You can add more custom resolution into resoluton.conf file.
 - Default resolution and default display(the main output display) can be set in vmon.conf.For more information about ouput displays and supported resolution profiles, run <code>xrandr</code> in terminal. 
-### Other configuration
+### Other configuration (teamviewer)
 - To show cursor in tablet screen, enable "show remote cursor" in teamviewer(tablet).   
 - To connect with wlan, enable "incomming lan connection" in Extras > Options(linux).   
 - To connect via USB cable, you need adb installed and forward Teamviewer port with <code>adb forward</code> or enable USB Tethering in android setting.   
@@ -55,7 +55,7 @@ EndSection
 </pre>
 and reboot.
 
-### 2.Not ready. Please check your connection error
+### 2.Teamviewer error : Not ready. Please check your connection error
 - Check if teamviewerd has been started, if not start it   
 <code>systemctl start teamviewerd</code>   
 - install <code>libicu</code> and restart teamviewer.
