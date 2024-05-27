@@ -1,7 +1,7 @@
 # Smartphone/tablet as second monitor for linux
 Simple cli tool to create virtual monitor for Linux. You can use any remote desktop software(vnc,teamviewer ..) to connect to that monitor. 
 
-- This tool uses xrandr so it will not work with wayland or your GPU does not support xrandr commands.
+- This tool uses xrandr so it will not work with wayland or if your GPU does not support xrandr commands.
 
 ![Review](review.jpg)
 
